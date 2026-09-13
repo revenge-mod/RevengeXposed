@@ -12,7 +12,6 @@ import io.github.revenge.reloadApp
 import io.github.revenge.xposed.RevengeConstants
 import io.github.revenge.xposed.api.registerNativeMethod
 import io.github.revenge.xposed.tweaks.RevengeUpdater
-import io.github.revenge.xposed.tweaks.plugins.InternalPluginFlags
 import io.github.revenge.xposed.tweaks.plugins.PluginStatesStore
 import io.github.revenge.xposed.versionCode
 import io.github.revenge.xposed.versionName
@@ -86,7 +85,11 @@ fun showRecoveryAlert(context: Context) {
                 0 -> reloadApp()
 
                 1 -> {
-                    PluginStatesStore.requestDefaultsOnlyBoot(context.dataDir.absolutePath)
+                    PluginStatesStore.setActiveSlot(
+                        context.dataDir.absolutePath,
+                        PluginStatesStore.DEFAULTS_SLOT,
+                        oneShot = true,
+                    )
                     reloadApp()
                 }
 
